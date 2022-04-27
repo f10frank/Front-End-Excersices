@@ -30,7 +30,7 @@ function ToDo (description) {
 
 // Tu código acá:
 ToDo.prototype.completeToDo = function() {
-  this.complete = true;
+  this.complete = !this.complete;
 }
 
 
@@ -54,35 +54,35 @@ ToDo.prototype.completeToDo = function() {
 
 function buildToDo(todo, index) {
   // Tu código acá:
-  let myCheck = document.createElement('input');
-  myCheck.setAttribute('type', 'checkbox');
+  //let myCheck = document.createElement('input');
+  //myCheck.setAttribute('type', 'checkbox');
 
   let toDoShell = document.createElement('div');    // 1
   toDoShell.setAttribute('class', 'toDoShell');     // 2
   let toDoText = document.createElement('span');    // 3
   toDoText.innerHTML = todo.description;            // 4
   
-  //toDoText.setAttribute('id', index); 
-  myCheck.setAttribute('id', index);
+  toDoText.setAttribute('id', index); 
+  //myCheck.setAttribute('id', index);
   
   if(todo.complete) {                               // 6
     toDoText.setAttribute('class', 'completeText');
-    document.getElementById('checkbox').checked = true;
+    //document.getElementById('checkbox').checked = true;
   }
 
-  //toDoText.addEventListener('click', completeToDo);
-  myCheck.addEventListener('click', completeToDo);
-  myCheck.setAttribute('class', 'completeCheckbox');
+  toDoText.addEventListener('click', completeToDo);
+  //myCheck.addEventListener('click', completeToDo);
+  //myCheck.setAttribute('class', 'completeCheckbox');
 
   toDoShell.appendChild(toDoText);                  // 7
-  toDoShell.appendChild(myCheck);
+  //toDoShell.appendChild(myCheck);
 
   return toDoShell;
 }
 /* 
 buildToDo recibe un objeto y devuelve un objeto tipo html:
-<div>
-<span> </span>
+<div class = 'toDoShell'>
+<span id = index class = 'completeText'> Comprar pan </span>
 </div>
 */
 
@@ -113,8 +113,8 @@ function buildToDos(toDos) {
 
 function displayToDos() {
   // Tu código acá:
-  let toDoContainer = document.getElementById('toDoContainer');
-  toDoContainer.innerHTML = '';
+  let toDoContainer = document.getElementById('toDoContainer'); // <div id = 'toDoContainer'> </div>
+  toDoContainer.innerHTML = '';   // <div id = 'toDoContainer'> " " </div>
   let result = buildToDos(toDoItems);   // paso 4
   for(let i = 0; i < result.length; i++) {
     toDoContainer.appendChild(result[i]);
@@ -168,8 +168,13 @@ document.querySelector('#toDoInput').addEventListener('keypress', function(event
 function completeToDo(event) {
   // DESCOMENTAR LA SIGUIENTE LINEA
   const index = event.target.id;
+
+  // event -> click
+  // event.target -> span
+  // event.target.id -> index buildToDo // index del span
+
   // Tu código acá:
-  toDoItems[index].completeToDo();    // paso 1
+  toDoItems[index].completeToDo();    // paso 1   complete false true
   displayToDos();                     // paso 2
 
 }
